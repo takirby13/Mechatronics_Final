@@ -1,0 +1,37 @@
+% Generate RRT-based trajectory (Assuming trajectory_points is a NxM matrix)
+trajectory_points = generate_rrt_trajectory(start_configuration, goal_configuration);
+
+% Execute trajectory
+for i = 1:size(trajectory_points, 1)
+    % Set joint positions (assuming trajectory_points contains joint positions)
+    joint_positions = trajectory_points(i, :);
+   
+    % Calculate gripper effort based on modeling
+    gripper_effort = calculate_gripper_effort(joint_positions);
+    
+    % Set gripper effort in the JointTrajectoryPoint
+    trajectory_point = create_trajectory_point(joint_positions, gripper_effort);
+    
+    % Execute trajectory point
+    execute_trajectory_point(trajectory_point);
+end
+
+
+function trajectory_points = generate_rrt_trajectory(start_configuration, goal_configuration)
+    % Implement RRT-based trajectory planning algorithm to generate a path from start_configuration to goal_configuration
+    trajectory_points = [start_configuration; goal_configuration];
+end
+
+function gripper_effort = calculate_gripper_effort(joint_positions)
+    % Calculate gripper effort based on modeling
+end
+
+function trajectory_point = create_trajectory_point(joint_positions, gripper_effort)
+    % Create a JointTrajectoryPoint with specified joint positions and gripper effort
+    trajectory_point = struct('positions', joint_positions, 'effort', gripper_effort);
+end
+
+function execute_trajectory_point(trajectory_point)
+    % Execute the trajectory point on the robot
+    disp(['Executing trajectory point with gripper effort: ', num2str(trajectory_point.effort)]);
+end
